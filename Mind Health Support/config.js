@@ -4,7 +4,7 @@
 
 const GEMINI_CONFIG = {
     // Replace this with your actual Gemini API key
-    API_KEY: 'YOUR_GOOGLE_API_KEY',
+    API_KEY: 'YOUR_GEMINI_API_KEY',
     
     // Gemini API endpoint
     API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
@@ -178,4 +178,5 @@ if (typeof module !== 'undefined' && module.exports) {
         detectMentalHealthTopics
     };
 }
+
 
