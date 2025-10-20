@@ -1,0 +1,1283 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+  }
+
+
+/* Chatbot Button */
+#chat-toggle {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    background: #4A90E2 !important;
+    color: white !important;
+    border: none !important;
+    padding: 15px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3) !important;
+    z-index: 10001 !important;
+    transition: all 0.3s ease !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+#chat-toggle:hover {
+    background: #357ABD !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4) !important;
+}
+
+#chat-toggle:active {
+    transform: translateY(0) !important;
+}
+
+/* Chatbot Container (Hidden by Default) */
+.chat-container {
+    width: 350px !important;
+    max-width: 90vw !important;
+    position: fixed !important;
+    bottom: 80px !important;
+    right: 20px !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important;
+    transform: translateY(100%) scale(0.9) !important;
+    opacity: 0 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: none !important;
+    z-index: 10000 !important;
+    border: 1px solid rgba(74, 144, 226, 0.1) !important;
+}
+
+/* When Chatbot is Active */
+.chat-container.active {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+/* Chat Header */
+.chat-header {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 16px 20px !important;
+    font-weight: 600 !important;
+    position: relative !important;
+    font-size: 16px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Chat Header Controls */
+.chat-header-controls {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+}
+
+/* Close Button */
+.close-btn {
+    font-size: 24px !important;
+    cursor: pointer !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    transition: all 0.2s ease !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.1) !important;
+}
+
+/* Clear Button */
+.clear-btn {
+    font-size: 16px !important;
+    cursor: pointer !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    transition: all 0.2s ease !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    opacity: 0.8 !important;
+}
+
+.clear-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.1) !important;
+    opacity: 1 !important;
+}
+
+/* Chat Box */
+.chat-box {
+    height: 320px !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    background: #f8fafc !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #cbd5e0 #f1f5f9 !important;
+}
+
+.chat-box::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: #f1f5f9 !important;
+    border-radius: 3px !important;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: #cbd5e0 !important;
+    border-radius: 3px !important;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0 !important;
+}
+
+.chat-box div {
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    border-radius: 18px !important;
+    max-width: 85% !important;
+    word-wrap: break-word !important;
+    line-height: 1.4 !important;
+    font-size: 14px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.bot-message {
+    background: #ffffff !important;
+    color: #2d3748 !important;
+    align-self: flex-start !important;
+    border: 1px solid #e2e8f0 !important;
+    border-bottom-left-radius: 6px !important;
+}
+
+.user-message {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+    color: white !important;
+    align-self: flex-end !important;
+    border-bottom-right-radius: 6px !important;
+}
+
+/* Chat Input */
+.chat-input {
+    display: flex !important;
+    padding: 16px !important;
+    border-top: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    gap: 8px !important;
+    align-items: center !important;
+}
+
+.chat-input input {
+    flex: 1 !important;
+    padding: 12px 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    outline: none !important;
+    border-radius: 24px !important;
+    font-size: 14px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    background: #f8fafc !important;
+    transition: all 0.2s ease !important;
+}
+
+.chat-input input:focus {
+    border-color: #4A90E2 !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1) !important;
+}
+
+.chat-input input::placeholder {
+    color: #a0aec0 !important;
+    font-size: 14px !important;
+}
+
+.chat-input button {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 20px !important;
+    border-radius: 24px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    transition: all 0.2s ease !important;
+    min-width: 60px !important;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2) !important;
+}
+
+.chat-input button:hover {
+    background: linear-gradient(135deg, #357ABD 0%, #2c5aa0 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3) !important;
+}
+
+.chat-input button:active {
+    transform: translateY(0) !important;
+}
+
+/* Typing Indicator */
+.typing {
+    background: #ffffff !important;
+    color: #2d3748 !important;
+    align-self: flex-start !important;
+    border: 1px solid #e2e8f0 !important;
+    border-bottom-left-radius: 6px !important;
+    padding: 12px 16px !important;
+    border-radius: 18px !important;
+    max-width: 85% !important;
+    word-wrap: break-word !important;
+    line-height: 1.4 !important;
+    font-size: 14px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.typing-dots {
+    display: inline-block !important;
+    font-size: 14px !important;
+    color: #4A90E2 !important;
+    font-weight: 500 !important;
+}
+
+.typing-dots span {
+    animation: typing 1.4s infinite !important;
+    opacity: 0 !important;
+    color: #4A90E2 !important;
+}
+
+.typing-dots span:nth-child(1) {
+    animation-delay: 0s !important;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.2s !important;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.4s !important;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f5f5f5;
+}
+
+/* Breathing Exercise Button */
+#breathing-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Breathing Exercise Box */
+.breathing-container {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    text-align: center;
+    z-index: 1;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Breathing Circle Animation */
+.breathing-circle {
+    width: 100px;
+    height: 100px;
+    background: #3498db;
+    border-radius: 50%;
+    margin: 20px auto;
+    animation: none;
+}
+
+/* Breathing Animations */
+@keyframes inhale {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.5); }
+}
+
+@keyframes exhale {
+    0% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
+
+
+
+
+
+
+/* Get Help Now Button */
+#help-button {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+}
+
+/* Close Button (Right Corner) */
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1;
+}
+
+
+
+/* Links */
+.modal a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.modal a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+}
+
+/* Ensure proper display for custom components */
+.chat-container,
+.breathing-container,
+.modal,
+#moodModal,
+#journalModal {
+  display: none;
+}
+
+.breathing-container.active,
+.modal.active {
+  display: flex !important;
+}
+
+#moodModal.active,
+#journalModal.active {
+  display: block !important;
+}
+
+/* Chatbot z-index is now handled in the main chatbot CSS rules above */
+
+.breathing-container {
+  z-index: 9998 !important;
+}
+
+.modal {
+  z-index: 10000 !important;
+}
+
+/* Chatbot positioning is now handled in the main chatbot CSS rules above */
+
+/* Ensure modal backdrop works properly */
+.modal.active {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Ensure breathing container is properly positioned */
+.breathing-container.active {
+  display: block !important;
+  position: fixed !important;
+  bottom: 50px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+/* Button Styles */
+#openMoodBtn {
+    width: 100%;
+    background-color: #404040;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  #openMoodBtn:hover {
+    background-color: #525252;
+  }
+  
+  /* Modal Styles */
+  /* The Modal (background) */
+  #moodModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 10002 !important; /* Above breathing (9998) and other modals (10000) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+    padding-top: 60px;
+  }
+  
+  /* Modal Content */
+  #moodModalContent {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .mood-options {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .mood {
+    font-size: 32px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .mood:hover {
+    transform: scale(1.2);
+  }
+  
+  #selectedMoodDisplay {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Mood Tracker: correct history list targeting */
+  #historyList {
+    text-align: left;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #historyList li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  /* Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+
+  /* Global Styles */
+
+  
+  /* Button Styles */
+  #openJournalBtn {
+    width: 100%;
+    background-color: #404040;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  #openJournalBtn:hover {
+    background-color: #525252;
+  }
+  
+  /* Modal Styles */
+  #journalModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 10002 !important; /* Align with mood modal, above breathing & generic modals */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+  }
+  
+  #journalModalContent {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
+  }
+  
+  #lastNotes {
+    margin-top: 20px;
+  }
+  
+  #journalHistory {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #journalHistory li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  /* Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Mobile Responsiveness Improvements */
+  @media (max-width: 768px) {
+    /* Improve modal responsiveness */
+    #moodModalContent,
+    #journalModalContent {
+      width: 90%;
+      padding: 15px;
+      margin: 20px auto;
+    }
+    
+    /* Improve mood options on mobile */
+    .mood-options {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .mood {
+      font-size: 28px;
+    }
+    
+    /* Improve form elements on mobile */
+    textarea {
+      font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    /* Improve button sizing on mobile */
+    #openMoodBtn,
+    #openJournalBtn {
+      padding: 12px;
+      font-size: 16px;
+    }
+    
+    /* Improve modal padding on mobile */
+    #moodModal,
+    #journalModal {
+      padding-top: 20px;
+    }
+    
+    /* Improve chatbot on mobile */
+    .chat-container {
+      width: 95vw !important;
+      max-width: 400px !important;
+      right: 2.5vw !important;
+      left: 2.5vw !important;
+      bottom: 100px !important;
+    }
+    
+    #chat-toggle {
+      bottom: 20px !important;
+      right: 20px !important;
+      padding: 12px 16px !important;
+      font-size: 14px !important;
+    }
+    
+    /* Improve breathing exercise on mobile */
+    .breathing-container {
+      width: 90vw;
+      max-width: 300px;
+      left: 5vw;
+      right: 5vw;
+    }
+    
+    /* Improve modal on mobile */
+    .modal-content {
+      width: 90vw;
+      max-width: 320px;
+      margin: 20px auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Extra small devices */
+    #moodModalContent,
+    #journalModalContent {
+      width: 95%;
+      padding: 12px;
+    }
+    
+    .mood {
+      font-size: 24px;
+    }
+    
+    #selectedMoodDisplay {
+      font-size: 18px;
+    }
+    
+    /* Improve chatbot on very small screens */
+    .chat-container {
+      width: 98vw !important;
+      max-width: 350px !important;
+      right: 1vw !important;
+      left: 1vw !important;
+      bottom: 90px !important;
+    }
+    
+    .chat-box {
+      height: 280px !important;
+      padding: 12px !important;
+    }
+    
+    .chat-input {
+      padding: 12px !important;
+    }
+    
+    .chat-input input {
+      padding: 10px 14px !important;
+      font-size: 16px !important;
+    }
+    
+    .chat-input button {
+      padding: 10px 16px !important;
+      font-size: 14px !important;
+    }
+    
+    /* Improve breathing exercise on very small screens */
+    .breathing-container {
+      width: 95vw;
+      left: 2.5vw;
+      right: 2.5vw;
+    }
+    
+    /* Improve modal on very small screens */
+    .modal-content {
+      width: 95vw;
+      margin: 10px auto;
+    }
+  }
+  
+  /* Touch-friendly improvements */
+  @media (hover: none) and (pointer: coarse) {
+    /* Improve touch targets */
+    .mood {
+      padding: 10px;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #openMoodBtn,
+    #openJournalBtn {
+      min-height: 44px;
+    }
+    
+    .close {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Improve button touch targets */
+    button {
+      min-height: 44px;
+    }
+    
+    /* Improve link touch targets */
+    a {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  /* High DPI display improvements */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .mood {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+  }
+  
+  /* Landscape orientation improvements */
+  @media (max-width: 768px) and (orientation: landscape) {
+    #moodModal,
+    #journalModal {
+      padding-top: 10px;
+    }
+    
+    #moodModalContent,
+    #journalModalContent {
+      margin: 10px auto;
+    }
+  }
+  
+  /* Dark mode support for mobile */
+  @media (prefers-color-scheme: dark) {
+    #moodModalContent,
+    #journalModalContent {
+      background-color: #1f2937;
+      color: #f9fafb;
+    }
+    
+    textarea {
+      background-color: #374151;
+      color: #f9fafb;
+      border-color: #4b5563;
+    }
+    
+    .close {
+      color: #9ca3af;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: #f9fafb;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .mood {
+      transition: none;
+    }
+    
+    .mood:hover {
+      transform: none;
+    }
+    
+    #openMoodBtn,
+    #openJournalBtn {
+      transition: none;
+    }
+    
+    .close {
+      transition: none;
+    }
+  }
+  
+  /* Mobile Navigation Improvements */
+@media (max-width: 1024px) {
+  /* Hide desktop navigation on mobile */
+  .lg\\:flex {
+    display: none !important;
+  }
+  
+  /* Show mobile menu button */
+  .lg\\:hidden {
+    display: flex !important;
+  }
+}
+
+/* Mobile menu styling */
+#mobile-menu {
+  transition: opacity 0.3s ease-in-out;
+}
+
+#mobile-menu > div {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Improve mobile menu button */
+#mobile-menu-btn {
+  z-index: 40;
+}
+
+/* Mobile menu overlay improvements */
+#mobile-menu {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Mobile menu content improvements */
+#mobile-menu > div {
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile menu navigation improvements */
+#mobile-menu nav ul li a,
+#mobile-menu nav ul li button {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+#mobile-menu nav ul li a:hover,
+#mobile-menu nav ul li button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+/* Mobile menu close button improvements */
+#close-mobile-menu {
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#close-mobile-menu:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile menu backdrop improvements */
+#mobile-menu {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile menu responsive improvements */
+@media (max-width: 640px) {
+  #mobile-menu > div {
+    width: 100vw;
+    max-width: none;
+  }
+  
+  #mobile-menu nav {
+    padding: 1rem;
+  }
+  
+  #mobile-menu nav ul li a,
+  #mobile-menu nav ul li button {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile menu animation improvements */
+@media (prefers-reduced-motion: no-preference) {
+  #mobile-menu > div {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  #mobile-menu nav ul li a,
+  #mobile-menu nav ul li button {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Mobile menu focus improvements */
+#mobile-menu nav ul li a:focus,
+#mobile-menu nav ul li button:focus {
+  outline: 2px solid #4A90E2;
+  outline-offset: 2px;
+}
+
+/* Mobile menu accessibility improvements */
+#mobile-menu nav ul li a:focus-visible,
+#mobile-menu nav ul li button:focus-visible {
+  background-color: rgba(74, 144, 226, 0.2);
+}
+
+/* Mobile menu high contrast support */
+@media (prefers-contrast: high) {
+  #mobile-menu > div {
+    border-left: 3px solid #ffffff;
+  }
+  
+  #mobile-menu nav ul li a,
+  #mobile-menu nav ul li button {
+    border: 1px solid transparent;
+  }
+  
+  #mobile-menu nav ul li a:hover,
+  #mobile-menu nav ul li button:hover {
+    border-color: #ffffff;
+  }
+}
+  
+  
+/* Final Mobile Improvements */
+@media (max-width: 768px) {
+  /* Improve form inputs on mobile */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    padding: 12px !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Improve buttons on mobile */
+  button {
+    min-height: 48px !important;
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Improve links on mobile */
+  a {
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  
+  /* Improve grid layouts on mobile */
+  .grid {
+    gap: 1rem !important;
+  }
+  
+  /* Improve spacing on mobile */
+  .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 1.5rem !important;
+  }
+  
+  .space-y-8 > * + * {
+    margin-top: 2rem !important;
+  }
+  
+  /* Improve padding on mobile */
+  .p-4 {
+    padding: 1rem !important;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .p-8 {
+    padding: 2rem !important;
+  }
+  
+  /* Improve margins on mobile */
+  .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .mb-6 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .mb-8 {
+    margin-bottom: 2rem !important;
+  }
+  
+  .mb-12 {
+    margin-bottom: 3rem !important;
+  }
+  
+  /* Improve text sizes on mobile */
+  .text-sm {
+    font-size: 0.875rem !important;
+  }
+  
+  .text-base {
+    font-size: 1rem !important;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem !important;
+  }
+  
+  .text-xl {
+    font-size: 1.25rem !important;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem !important;
+  }
+  
+  .text-3xl {
+    font-size: 1.875rem !important;
+  }
+  
+  .text-4xl {
+    font-size: 2.25rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 3rem !important;
+  }
+  
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+}
+
+/* Mobile-specific button improvements */
+@media (max-width: 768px) {
+  /* Make buttons more touch-friendly */
+  button[onclick*="toggleChatbot"],
+  button[onclick*="toggleBreathing"],
+  button[onclick*="toggleHelpModal"],
+  button[onclick*="toggleMoodModal"],
+  button[onclick*="toggleJournalModal"] {
+    min-height: 48px !important;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Improve button hover states on mobile */
+  button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  /* Improve button active states on mobile */
+  button:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+/* Mobile-specific form improvements */
+@media (max-width: 768px) {
+  /* Improve form field focus states */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none !important;
+    border-color: #4A90E2 !important;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1) !important;
+  }
+  
+  /* Improve form field placeholder text */
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af !important;
+    font-size: 16px !important;
+  }
+  
+  /* Improve form field labels */
+  label {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+/* Mobile-specific animation improvements */
+@media (max-width: 768px) {
+  /* Reduce animation intensity on mobile for better performance */
+  .animate__animated {
+    animation-duration: 0.6s !important;
+  }
+  
+  .animate__fadeIn {
+    animation-duration: 0.4s !important;
+  }
+  
+  .animate__fadeInUp {
+    animation-duration: 0.5s !important;
+  }
+  
+  .animate__fadeInLeft {
+    animation-duration: 0.5s !important;
+  }
+  
+  .animate__fadeInRight {
+    animation-duration: 0.5s !important;
+  }
+  
+  .animate__pulse {
+    animation-duration: 2s !important;
+  }
+}
+
+/* Mobile-specific accessibility improvements */
+@media (max-width: 768px) {
+  /* Improve focus indicators on mobile */
+  *:focus {
+    outline: 2px solid #4A90E2 !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Improve focus indicators for buttons */
+  button:focus {
+    outline: 2px solid #4A90E2 !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Improve focus indicators for links */
+  a:focus {
+    outline: 2px solid #4A90E2 !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Improve focus indicators for form elements */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid #4A90E2 !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Mobile-specific performance improvements */
+@media (max-width: 768px) {
+  /* Optimize transitions for mobile */
+  * {
+    transition: all 0.2s ease !important;
+  }
+  
+  /* Reduce box-shadow complexity on mobile */
+  .shadow-lg {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+  
+  /* Optimize backdrop filters for mobile */
+  .backdrop-blur {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+}
+  
+  

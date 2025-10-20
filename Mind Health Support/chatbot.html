@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Chatbot Toggle Button -->
+    <button id="chat-toggle" onclick="toggleChatbot()">💬 Chat</button>
+
+    <!-- Chatbot Container (Hidden by Default) -->
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            Mind Care Bot
+            <span class="close-btn" onclick="toggleChatbot()">×</span>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="bot-message">Hello! How can I support you today? 😊</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

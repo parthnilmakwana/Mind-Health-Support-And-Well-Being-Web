@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple API Test</title>
+</head>
+<body>
+    <h1>Simple Gemini API Test</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result">Click the button to test</div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing API...';
+
+            const API_KEY = 'AIzaSyCmo8bsvpC0keBLKZH_hLQh24pZ-1hYyyg';
+            const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
+
+            try {
+                console.log('Making API request...');
+                
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: 'Hello! Please respond with a short message to test the API.'
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 100
+                        }
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    resultDiv.innerHTML = `❌ Error: ${response.status} - ${errorText}`;
+                    console.error('API Error:', errorText);
+                    return;
+                }
+
+                const data = await response.json();
+                console.log('API Response:', data);
+
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const responseText = data.candidates[0].content.parts[0].text;
+                    resultDiv.innerHTML = `✅ Success! Response: ${responseText}`;
+                } else {
+                    resultDiv.innerHTML = `❌ Unexpected response: ${JSON.stringify(data)}`;
+                }
+
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
